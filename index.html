@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#151515" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Google Mods - 無料オンラインゲーム | クラシックスネークゲーム</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Snake Google Modsで究極のスネークゲーム体験を楽しもう！無料でプレイできるクラシックなスネークゲームのモダンバージョン。モバイル、タブレット、PCに完全対応。">
+    <meta name="keywords" content="スネークゲーム, Google Snake, オンラインゲーム, 無料ゲーム, クラシックゲーム, ブラウザゲーム, Snake Mods">
+    <meta name="author" content="Snake Google Mods">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Snake Google Mods - 無料オンラインスネークゲーム">
+    <meta property="og:description" content="クラシックなスネークゲームを現代風にアレンジ。無料でプレイ可能、全デバイス対応！">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kaloodinaz.github.io/snakemods/">
+    <meta property="og:image" content="https://kaloodinaz.github.io/snakemods/snake-preview.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Snake Google Mods - 無料オンラインスネークゲーム">
+    <meta name="twitter:description" content="クラシックなスネークゲームを現代風にアレンジ。無料でプレイ可能！">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%234CAF50' d='M8 24c0-4.4 3.6-8 8-8h4c4.4 0 8 3.6 8 8v8c0 4.4-3.6 8-8 8h-4c-4.4 0-8-3.6-8-8v-8z'/%3E%3Cpath fill='%232E7D32' d='M20 32h4c4.4 0 8 3.6 8 8v8c0 4.4-3.6 8-8 8h-4c-4.4 0-8-3.6-8-8v-8c0-4.4 3.6-8 8-8z'/%3E%3Cpath fill='%232E7D32' d='M32 16h4c4.4 0 8 3.6 8 8v8c0 4.4-3.6 8-8 8h-4c-4.4 0-8-3.6-8-8v-8c0-4.4 3.6-8 8-8z'/%3E%3Cpath fill='%231B5E20' d='M44 8h4c4.4 0 8 3.6 8 8v8c0 4.4-3.6 8-8 8h-4c-4.4 0-8-3.6-8-8v-8c0-4.4 3.6-8 8-8z'/%3E%3Ccircle fill='%23FF5722' cx='52' cy='12' r='3'/%3E%3C/svg%3E">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #4CAF50, #2E7D32);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+        }
+        
+        .hero-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        /* Game Container */
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .game-header {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .btn-fullscreen {
+            background: #FF5722;
+        }
+        
+        .btn-fullscreen:hover {
+            background: #E64A19;
+        }
+        
+        .game-frame {
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: block;
+        }
+        
+        /* PC Ads */
+        .pc-ads {
+            display: none;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .ad-container {
+            width: 728px;
+            height: 90px;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.9rem;
+            border: 2px dashed #ccc;
+        }
+        
+        /* SEO Content */
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .content-title {
+            color: #2E7D32;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .content-text {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #2E7D32;
+        }
+        
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .pc-ads {
+                display: flex;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .game-frame {
+                height: 400px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .content-section {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .hero-title {
+                font-size: 1.5rem;
+            }
+            
+            .game-frame {
+                height: 300px;
+            }
+            
+            .game-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .game-container, .content-section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        /* Fullscreen styles */
+        .fullscreen-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            z-index: 9999;
+        }
+        
+        .fullscreen-container iframe {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <script>
+    if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js')
+    .then(registration => {console.log('Service Worker registered successfully:', registration);})
+    .catch(error => {console.log('Error in Service Worker registration:', error);});});}
+    </script>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon">🐍</div>
+                    Snake Google Mods
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <h1 class="hero-title">Snake Google Mods</h1>
+                <p class="hero-subtitle">クラシックなスネークゲームを現代風にアレンジした究極のゲーム体験</p>
+            </section>
+            
+            <!-- Game Container -->
+            <div class="game-container">
+                <div class="game-header">
+                    <div class="game-title">🎮 Snake Game</div>
+                    <div class="controls">
+                        <button class="btn" onclick="reloadGame()">🔄 リロード</button>
+                        <button class="btn btn-fullscreen" onclick="toggleFullscreen()">🔍 フルスクリーン</button>
+                    </div>
+                </div>
+                <iframe id="gameFrame" class="game-frame" src="https://google-snake-mods.pages.dev/" title="Snake Google Mods Game"></iframe>
+            </div>
+            
+            <!-- PC Ads -->
+            <div class="pc-ads">
+                <div class="ad-container">
+                   <script type="text/javascript">
+     atOptions = {
+       'key' : 'd1d26e15f7c349fd8e403bb5ea491a31',
+       'format' : 'iframe',
+       'height' : 90,
+       'width' : 728,
+       'params' : {}
+     };
+   </script>
+   <script type="text/javascript" src="//www.highperformanceformat.com/d1d26e15f7c349fd8e403bb5ea491a31/invoke.js"></script>
+                </div>
+            </div>
+            
+            <!-- SEO Content Section -->
+            <section class="content-section">
+                <h2 class="content-title">Snake Google Modsについて</h2>
+                <p class="content-text">
+                    Snake Google Modsは、クラシックなスネークゲームを現代風にアレンジした無料のオンラインゲームです。1970年代に生まれたシンプルながら中毒性の高いゲームプレイを、最新のウェブ技術で蘇らせました。
+                </p>
+                <p class="content-text">
+                    このゲームでは、画面上の蛇を操作してエサを食べながら成長させていきます。自分の体や壁にぶつからないよう注意しながら、できるだけ長い蛇を目指しましょう。シンプルなルールながら、奥深い戦略性と反射神経が要求される、まさに時代を超えた名作ゲームです。
+                </p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3 class="feature-title">完全レスポンシブ</h3>
+                        <p>モバイル、タブレット、PCのすべてのデバイスで最適な体験を提供</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">直感的な操作</h3>
+                        <p>タッチ操作とキーボード操作の両方に対応した使いやすいインターface</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3 class="feature-title">高速パフォーマンス</h3>
+                        <p>最新のウェブ技術による滑らかで高速なゲームプレイ</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3 class="feature-title">モダンデザイン</h3>
+                        <p>美しいグラフィックと現代的なUIデザインで楽しめる</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2 class="content-title">ゲームの遊び方</h2>
+                <p class="content-text">
+                    <strong>基本操作：</strong> 矢印キー（PC）またはスワイプ操作（モバイル）で蛇の方向を変更します。画面上に現れる赤いエサを食べると蛇が成長し、スコアが上がります。
+                </p>
+                <p class="content-text">
+                    <strong>ゲーム目標：</strong> できるだけ多くのエサを食べて長い蛇を作ることが目標です。自分の体や壁にぶつかるとゲームオーバーになるので注意が必要です。
+                </p>
+                <p class="content-text">
+                    <strong>攻略のコツ：</strong> 急激な方向転換は避け、常に次の動きを考えながらプレイしましょう。画面の端を有効活用し、自分を囲い込まないよう計画的に動くことが高スコアへの鍵です。
+                </p>
+            </section>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Snake Google Mods. すべての権利を保有します。</p>
+            <p>クラシックゲームを愛するすべての人々へ</p>
+        </div>
+    </footer>
+    
+    <script>
+        function reloadGame() {
+            const gameFrame = document.getElementById('gameFrame');
+            gameFrame.src = gameFrame.src;
+        }
+        
+        function toggleFullscreen() {
+            const gameFrame = document.getElementById('gameFrame');
+            
+            if (gameFrame.classList.contains('fullscreen-container')) {
+                // Exit fullscreen
+                gameFrame.classList.remove('fullscreen-container');
+                document.body.style.overflow = '';
+            } else {
+                // Enter fullscreen
+                gameFrame.classList.add('fullscreen-container');
+                document.body.style.overflow = 'hidden';
+                
+                // Add click to exit fullscreen
+                gameFrame.addEventListener('click', function exitFullscreen(e) {
+                    if (e.target === gameFrame) {
+                        gameFrame.classList.remove('fullscreen-container');
+                        document.body.style.overflow = '';
+                        gameFrame.removeEventListener('click', exitFullscreen);
+                    }
+                });
+            }
+        }
+        
+        // Handle ESC key for fullscreen exit
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const gameFrame = document.getElementById('gameFrame');
+                if (gameFrame.classList.contains('fullscreen-container')) {
+                    gameFrame.classList.remove('fullscreen-container');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+        
+        // Prevent zooming on mobile when double-tapping game
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        });
+        
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>
